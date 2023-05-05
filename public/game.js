@@ -363,8 +363,7 @@ gameScene.onJupiterClick = function () {
 };
 
 gameScene.onNeptuneClick = function () {
-  console.log("Neptune clicked");
-  // Add your custom code to navigate to the desired path
+  window.location.href = "https://qubeqode.github.io/phaserMemoryGame/";
 };
 
 // this is called up to 60 times per second
