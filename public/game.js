@@ -281,21 +281,21 @@ gameScene.create = function () {
       this.sys.game.config.height / 2 + 142
     );
 
-  // Create neptune and make it interactive
-  let neptune = this.add
-    .sprite(0, 0, "neptune")
+  // Create uranus and make it interactive
+  let uranus = this.add
+    .sprite(0, 0, "uranus")
     .setScale(1.5, 1.5)
     .setPosition(
       this.sys.game.config.width / 2 + 10,
       this.sys.game.config.height / 2 + 150
     )
     .setInteractive();
-  neptune.on("pointerdown", this.onNeptuneClick, this);
+  uranus.on("pointerdown", this.onuranusClick, this);
 
-  // Add text box for the neptune
-  let neptuneText = this.add.text(
-    neptune.x - neptune.width / 2 - 40,
-    neptune.y - neptune.height / 2 + 60,
+  // Add text box for the uranus
+  let uranusText = this.add.text(
+    uranus.x - uranus.width / 2 - 40,
+    uranus.y - uranus.height / 2 + 60,
     "Card Matching!",
     {
       fontSize: "18px",
@@ -321,9 +321,9 @@ gameScene.create = function () {
       this.sys.game.config.height / 2 + 137
     );
 
-  // create uranus
+  // create neptune
   this.add
-    .sprite(0, 0, "uranus")
+    .sprite(0, 0, "neptune")
     .setScale(1.5, 1.5)
     .setPosition(
       this.sys.game.config.width / 2 - 155,
@@ -362,7 +362,7 @@ gameScene.onJupiterClick = function () {
   // Add your custom code to navigate to the desired path
 };
 
-gameScene.onNeptuneClick = function () {
+gameScene.onuranusClick = function () {
   window.location.href = "https://qubeqode.github.io/phaserMemoryGame/";
 };
 
