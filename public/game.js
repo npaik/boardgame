@@ -414,20 +414,78 @@ gameScene.create = function () {
   // Position the markers in each corner of the game world
   const playerOneMarker = this.add
     .sprite(0, 0, "playerone")
-    .setOrigin(0, 0)
+    .setPosition(
+      this.sys.game.config.width / 2 - 335,
+      this.sys.game.config.height / 2 - 220
+    )
     .setScale(2, 2);
+
+  // Add text box for the playerOneMarker
+  let playerOneMarkerText = this.add.text(
+    playerOneMarker.x - playerOneMarker.width / 2 - 25,
+    playerOneMarker.y - playerOneMarker.height / 2 + 50,
+    "Player 1",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
   const playerTwoMarker = this.add
     .sprite(worldWidth, 0, "playertwo")
-    .setOrigin(1, 0)
+    .setPosition(
+      this.sys.game.config.width / 2 + 335,
+      this.sys.game.config.height / 2 - 220
+    )
     .setScale(2, 2);
+
+  // Add text box for the playerTwoMarker
+  let playerTwoMarkerText = this.add.text(
+    playerTwoMarker.x - playerTwoMarker.width / 2 - 25,
+    playerTwoMarker.y - playerTwoMarker.height / 2 + 50,
+    "Player 2",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
   const playerThreeMarker = this.add
     .sprite(0, worldHeight, "playerthree")
-    .setOrigin(0, 1)
+    .setPosition(
+      this.sys.game.config.width / 2 - 335,
+      this.sys.game.config.height / 2 + 220
+    )
     .setScale(2, 2);
+
+  // Add text box for the playerThreeMarker
+  let playerThreeMarkerText = this.add.text(
+    playerThreeMarker.x - playerThreeMarker.width / 2 - 25,
+    playerThreeMarker.y - playerThreeMarker.height / 2 + 50,
+    "Player 3",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
   const playerFourMarker = this.add
     .sprite(worldWidth, worldHeight, "playerfour")
-    .setOrigin(1, 1)
+    .setPosition(
+      this.sys.game.config.width / 2 + 335,
+      this.sys.game.config.height / 2 + 220
+    )
     .setScale(2, 2);
+  // Add text box for the playerFourMarker
+  let playerFourMarkerText = this.add.text(
+    playerFourMarker.x - playerFourMarker.width / 2 - 25,
+    playerFourMarker.y - playerFourMarker.height / 2 + 50,
+    "Player 4",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
 };
 
 // this is called up to 60 times per second
