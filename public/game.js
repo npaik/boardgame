@@ -13,34 +13,201 @@ let config = {
 let game = new Phaser.Game(config);
 
 // initialize variables
+const WIDTH = config.width;
+const HEIGHT = config.height;
+let outputNumber;
+
+// each points where the markers can be placed
 const gamePath = [
-  "sun",
-  "star1",
-  "star2",
-  "mercury",
-  "star3",
-  "star4",
-  "venus",
-  "star5",
-  "star6",
-  "earth",
-  "star7",
-  "star8",
-  "mars",
-  "star9",
-  "star10",
-  "jupiter",
-  "star11",
-  "star12",
-  "saturn",
-  "star13",
-  "star14",
-  "uranus",
-  "star15",
-  "star16",
-  "neptune",
-  "star17",
-  "star18",
+  {
+    name: "sun",
+    x: WIDTH / 2 - 290,
+    y: HEIGHT / 2 + 10,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star1",
+    x: WIDTH / 2 - 255,
+    y: HEIGHT / 2 - 75,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star2",
+    x: WIDTH / 2 - 235,
+    y: HEIGHT / 2 - 95,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "mercury",
+    x: WIDTH / 2 - 200,
+    y: HEIGHT / 2 - 115,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star3",
+    x: WIDTH / 2 - 165,
+    y: HEIGHT / 2 - 133,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star4",
+    x: WIDTH / 2 - 140,
+    y: HEIGHT / 2 - 142,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "venus",
+    x: WIDTH / 2 - 95,
+    y: HEIGHT / 2 - 155,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star5",
+    x: WIDTH / 2 - 50,
+    y: HEIGHT / 2 - 160,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star6",
+    x: WIDTH / 2 - 22,
+    y: HEIGHT / 2 - 163,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "earth",
+    x: WIDTH / 2 + 35,
+    y: HEIGHT / 2 - 170,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star7",
+    x: WIDTH / 2 + 95,
+    y: HEIGHT / 2 - 157,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star8",
+    x: WIDTH / 2 + 125,
+    y: HEIGHT / 2 - 151,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "mars",
+    x: WIDTH / 2 + 185,
+    y: HEIGHT / 2 - 140,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star9",
+    x: WIDTH / 2 + 240,
+    y: HEIGHT / 2 - 108,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star10",
+    x: WIDTH / 2 + 265,
+    y: HEIGHT / 2 - 90,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "jupiter",
+    x: WIDTH / 2 + 305,
+    y: HEIGHT / 2 - 25,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star11",
+    x: WIDTH / 2 + 280,
+    y: HEIGHT / 2 + 60,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star12",
+    x: WIDTH / 2 + 255,
+    y: HEIGHT / 2 + 80,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "saturn",
+    x: WIDTH / 2 + 200,
+    y: HEIGHT / 2 + 110,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star13",
+    x: WIDTH / 2 + 132,
+    y: HEIGHT / 2 + 135,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star14",
+    x: WIDTH / 2 + 95,
+    y: HEIGHT / 2 + 142,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "uranus",
+    x: WIDTH / 2 + 15,
+    y: HEIGHT / 2 + 145,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star15",
+    x: WIDTH / 2 - 60,
+    y: HEIGHT / 2 + 142,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star16",
+    x: WIDTH / 2 - 90,
+    y: HEIGHT / 2 + 137,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "neptune",
+    x: WIDTH / 2 - 155,
+    y: HEIGHT / 2 + 120,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star17",
+    x: WIDTH / 2 - 215,
+    y: HEIGHT / 2 + 90,
+    isEvent: false,
+    isBlackHole: false,
+  },
+  {
+    name: "star18",
+    x: WIDTH / 2 - 240,
+    y: HEIGHT / 2 + 73,
+    isEvent: false,
+    isBlackHole: false,
+  },
 ];
 
 // Load assets
@@ -79,11 +246,13 @@ gameScene.create = function () {
   // create bg sprite
   this.add
     .sprite(0, 0, "background")
-    .setScale(2.5, 1.75)
+    .setScale(1, 1)
     .setPosition(
       this.sys.game.config.width / 2,
       this.sys.game.config.height / 2
     );
+  timer = this.add.text(700, 0, `Timer:`);
+  timer.depth = 1;
 
   // create inner board
   this.add
@@ -94,299 +263,168 @@ gameScene.create = function () {
       this.sys.game.config.height / 2
     );
 
-  // Create sun and make it interactive
+  // Create sun
   let sun = this.add
     .sprite(0, 0, "sun")
     .setScale(2.25, 2.25)
-    .setPosition(
-      this.sys.game.config.width / 2 - 290,
-      this.sys.game.config.height / 2 + 10
-    )
-    .setInteractive();
-  sun.on("pointerdown", this.onSunClick, this);
-
-  // Add text box for the sun
-  let sunText = this.add.text(
-    sun.x - sun.width / 2 - 45,
-    sun.y - sun.height / 2 + 70,
-    "Meteor Shower!",
-    {
-      fontSize: "18px",
-      fill: "#ffffff",
-    }
-  );
+    .setPosition(gamePath[0].x, gamePath[0].y);
 
   // create star1
   let star1 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 255,
-      this.sys.game.config.height / 2 - 75
-    );
+    .setPosition(gamePath[1].x, gamePath[1].y);
 
   // create star2
   let star2 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 235,
-      this.sys.game.config.height / 2 - 95
-    );
+    .setPosition(gamePath[2].x, gamePath[2].y);
 
   // create mercury
   this.add
     .sprite(0, 0, "mercury")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 - 200,
-      this.sys.game.config.height / 2 - 115
-    );
+    .setPosition(gamePath[3].x, gamePath[3].y);
 
   // create star3
   let star3 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 165,
-      this.sys.game.config.height / 2 - 133
-    );
+    .setPosition(gamePath[4].x, gamePath[4].y);
 
   // create star4
   let star4 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 140,
-      this.sys.game.config.height / 2 - 142
-    );
+    .setPosition(gamePath[5].x, gamePath[5].y);
 
   // create venus
   this.add
     .sprite(0, 0, "venus")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 - 95,
-      this.sys.game.config.height / 2 - 155
-    );
+    .setPosition(gamePath[6].x, gamePath[6].y);
 
   // create star5
   let star5 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 50,
-      this.sys.game.config.height / 2 - 160
-    );
+    .setPosition(gamePath[7].x, gamePath[7].y);
 
   // create star6
   let star6 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 22,
-      this.sys.game.config.height / 2 - 163
-    );
+    .setPosition(gamePath[8].x, gamePath[8].y);
 
-  // Create earth and make it interactive
+  // Create earth
   let earth = this.add
     .sprite(0, 0, "earth")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 + 35,
-      this.sys.game.config.height / 2 - 170
-    )
-    .setInteractive();
-  earth.on("pointerdown", this.onEarthClick, this);
-
-  // Add text box for the earth
-  let earthText = this.add.text(
-    earth.x - earth.width / 2 - 35,
-    earth.y - earth.height / 2 + 50,
-    "Typing Game!",
-    {
-      fontSize: "18px",
-      fill: "#ffffff",
-    }
-  );
+    .setPosition(gamePath[9].x, gamePath[9].y);
 
   // create star7
   let star7 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 95,
-      this.sys.game.config.height / 2 - 157
-    );
+    .setPosition(gamePath[10].x, gamePath[10].y);
 
   // create star8
   let star8 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 125,
-      this.sys.game.config.height / 2 - 151
-    );
+    .setPosition(gamePath[11].x, gamePath[11].y);
 
   // create mars
   this.add
     .sprite(0, 0, "mars")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 + 185,
-      this.sys.game.config.height / 2 - 140
-    );
+    .setPosition(gamePath[12].x, gamePath[12].y);
 
   // create star9
   let star9 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 240,
-      this.sys.game.config.height / 2 - 108
-    );
+    .setPosition(gamePath[13].x, gamePath[13].y);
 
   // create star10
   let star10 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 265,
-      this.sys.game.config.height / 2 - 90
-    );
+    .setPosition(gamePath[14].x, gamePath[14].y);
 
   // Create jupiter and make it interactive
   let jupiter = this.add
     .sprite(0, 0, "jupiter")
     .setScale(1.3, 1.3)
-    .setPosition(
-      this.sys.game.config.width / 2 + 305,
-      this.sys.game.config.height / 2 - 25
-    )
-    .setInteractive();
-  jupiter.on("pointerdown", this.onJupiterClick, this);
-
-  // Add text box for the jupiter
-  let jupiterText = this.add.text(
-    jupiter.x - jupiter.width / 2 - 30,
-    jupiter.y - jupiter.height / 2 + 85,
-    "Space Trivia!",
-    {
-      fontSize: "18px",
-      fill: "#ffffff",
-    }
-  );
+    .setPosition(gamePath[15].x, gamePath[15].y);
 
   // create star11
   let star11 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 290,
-      this.sys.game.config.height / 2 + 45
-    );
+    .setPosition(gamePath[16].x, gamePath[16].y);
 
   // create star12
   let star12 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 272,
-      this.sys.game.config.height / 2 + 67
-    );
+    .setPosition(gamePath[17].x, gamePath[17].y);
 
   // create saturn
   this.add
     .sprite(0, 0, "saturn")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 + 215,
-      this.sys.game.config.height / 2 + 110
-    );
+    .setAngle(35)
+    .setPosition(gamePath[18].x, gamePath[18].y);
 
   let star13 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 110,
-      this.sys.game.config.height / 2 + 137
-    );
+    .setPosition(gamePath[19].x, gamePath[19].y);
 
   // create star14
   let star14 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 + 80,
-      this.sys.game.config.height / 2 + 142
-    );
+    .setPosition(gamePath[20].x, gamePath[20].y);
 
   // Create uranus and make it interactive
   let uranus = this.add
     .sprite(0, 0, "uranus")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 + 10,
-      this.sys.game.config.height / 2 + 150
-    )
+    .setPosition(gamePath[21].x, gamePath[21].y)
     .setInteractive();
-  uranus.on("pointerdown", this.onuranusClick, this);
-
-  // Add text box for the uranus
-  let uranusText = this.add.text(
-    uranus.x - uranus.width / 2 - 40,
-    uranus.y - uranus.height / 2 + 60,
-    "Card Matching!",
-    {
-      fontSize: "18px",
-      fill: "#ffffff",
-    }
-  );
 
   // create star15
   let star15 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 60,
-      this.sys.game.config.height / 2 + 142
-    );
+    .setPosition(gamePath[22].x, gamePath[22].y);
 
   // create star16
   let star16 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 90,
-      this.sys.game.config.height / 2 + 137
-    );
+    .setPosition(gamePath[23].x, gamePath[23].y);
 
   // create neptune
   this.add
     .sprite(0, 0, "neptune")
     .setScale(1.5, 1.5)
-    .setPosition(
-      this.sys.game.config.width / 2 - 155,
-      this.sys.game.config.height / 2 + 120
-    );
+    .setPosition(gamePath[24].x, gamePath[24].y);
 
   // create star17
   let star17 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 215,
-      this.sys.game.config.height / 2 + 90
-    );
+    .setPosition(gamePath[25].x, gamePath[25].y);
 
   // create star18
   let star18 = this.add
     .sprite(0, 0, "star")
     .setScale(1, 1)
-    .setPosition(
-      this.sys.game.config.width / 2 - 240,
-      this.sys.game.config.height / 2 + 73
-    );
+    .setPosition(gamePath[26].x, gamePath[26].y);
 
   // Create roll button and make it interactive
   this.rollButton = this.add
@@ -411,8 +449,8 @@ gameScene.create = function () {
   const worldWidth = this.sys.game.config.width;
   const worldHeight = this.sys.game.config.height;
 
-  // Position the markers in each corner of the game world
-  const playerOneMarker = this.add
+  // Position all players in each corner of the game world
+  const playerOne = this.add
     .sprite(0, 0, "playerone")
     .setPosition(
       this.sys.game.config.width / 2 - 335,
@@ -420,10 +458,10 @@ gameScene.create = function () {
     )
     .setScale(2, 2);
 
-  // Add text box for the playerOneMarker
-  let playerOneMarkerText = this.add.text(
-    playerOneMarker.x - playerOneMarker.width / 2 - 25,
-    playerOneMarker.y - playerOneMarker.height / 2 + 50,
+  // Add text box for the playerOne
+  let playerOneText = this.add.text(
+    playerOne.x - playerOne.width / 2 - 25,
+    playerOne.y - playerOne.height / 2 + 50,
     "Player 1",
     {
       fontSize: "18px",
@@ -431,7 +469,7 @@ gameScene.create = function () {
     }
   );
 
-  const playerTwoMarker = this.add
+  const playerTwo = this.add
     .sprite(worldWidth, 0, "playertwo")
     .setPosition(
       this.sys.game.config.width / 2 + 335,
@@ -439,10 +477,10 @@ gameScene.create = function () {
     )
     .setScale(2, 2);
 
-  // Add text box for the playerTwoMarker
-  let playerTwoMarkerText = this.add.text(
-    playerTwoMarker.x - playerTwoMarker.width / 2 - 25,
-    playerTwoMarker.y - playerTwoMarker.height / 2 + 50,
+  // Add text box for the playerTwo
+  let playerTwoText = this.add.text(
+    playerTwo.x - playerTwo.width / 2 - 25,
+    playerTwo.y - playerTwo.height / 2 + 50,
     "Player 2",
     {
       fontSize: "18px",
@@ -450,7 +488,7 @@ gameScene.create = function () {
     }
   );
 
-  const playerThreeMarker = this.add
+  const playerThree = this.add
     .sprite(0, worldHeight, "playerthree")
     .setPosition(
       this.sys.game.config.width / 2 - 335,
@@ -458,10 +496,10 @@ gameScene.create = function () {
     )
     .setScale(2, 2);
 
-  // Add text box for the playerThreeMarker
-  let playerThreeMarkerText = this.add.text(
-    playerThreeMarker.x - playerThreeMarker.width / 2 - 25,
-    playerThreeMarker.y - playerThreeMarker.height / 2 + 50,
+  // Add text box for the playerThree
+  let playerThreeText = this.add.text(
+    playerThree.x - playerThree.width / 2 - 25,
+    playerThree.y - playerThree.height / 2 + 50,
     "Player 3",
     {
       fontSize: "18px",
@@ -469,52 +507,61 @@ gameScene.create = function () {
     }
   );
 
-  const playerFourMarker = this.add
+  const playerFour = this.add
     .sprite(worldWidth, worldHeight, "playerfour")
     .setPosition(
       this.sys.game.config.width / 2 + 335,
       this.sys.game.config.height / 2 + 220
     )
     .setScale(2, 2);
-  // Add text box for the playerFourMarker
-  let playerFourMarkerText = this.add.text(
-    playerFourMarker.x - playerFourMarker.width / 2 - 25,
-    playerFourMarker.y - playerFourMarker.height / 2 + 50,
+
+  // Add text box for the playerFour
+  let playerFourText = this.add.text(
+    playerFour.x - playerFour.width / 2 - 25,
+    playerFour.y - playerFour.height / 2 + 50,
     "Player 4",
     {
       fontSize: "18px",
       fill: "#ffffff",
     }
   );
+
+  this.playerOneMarker = this.add
+    .sprite(0, 0, "playerone")
+    .setPosition(gamePath[0].x, gamePath[0].y);
+
+  this.playerTwoMarker = this.add
+    .sprite(0, 0, "playertwo")
+    .setPosition(gamePath[0].x, gamePath[0].y);
+
+  this.playerThreeMarker = this.add
+    .sprite(0, 0, "playerthree")
+    .setPosition(gamePath[0].x, gamePath[0].y);
+
+  this.playerFourMarker = this.add
+    .sprite(0, 0, "playerfour")
+    .setPosition(gamePath[0].x, gamePath[0].y);
 };
 
 // this is called up to 60 times per second
 gameScene.update = function () {};
 
-gameScene.onSunClick = function () {
-  window.location.href = "https://jamieskidmore.github.io/clicker/";
-};
-
-gameScene.onEarthClick = function () {
-  window.location.href = "http://hypfgqkmxo.us16.qoddiapp.com/";
-};
-
-gameScene.onJupiterClick = function () {
-  console.log("Jupiter clicked");
-  // Add your custom code to navigate to the desired path
-};
-
-gameScene.onuranusClick = function () {
-  window.location.href = "https://qubeqode.github.io/phaserMemoryGame/";
-};
-
 gameScene.onRollButtonClick = function () {
   this.rollButton.setVisible(false);
   this.dice.setVisible(true);
-  this.rollDice();
+  this.rollDice((outputNumber) => {
+    console.log("Output Number:", outputNumber);
+  });
+  console.log(gameScene.sys.tweens.scene);
+  // gameScene.moveMarker(
+  //   gameScene.sys.tweens.scene.playerOneMarker,
+  //   outputNumber,
+  //   gamePath[0].x,
+  //   gamePath[0].y
+  // );
 };
 
-gameScene.rollDice = function () {
+gameScene.rollDice = function (callback) {
   // Start dice rolling animation
   let diceAnimation = this.time.addEvent({
     delay: 100,
@@ -522,10 +569,14 @@ gameScene.rollDice = function () {
     callbackScope: this,
     loop: true,
   });
-
   // Stop dice rolling animation after 2 seconds
   this.time.delayedCall(2000, () => {
     diceAnimation.remove();
+    let curruntOutputNumber = this.getDiceNumberFromFace(this.dice.texture.key);
+    outputNumber = curruntOutputNumber;
+    if (callback) {
+      callback(curruntOutputNumber);
+    }
   });
 };
 
@@ -540,4 +591,36 @@ gameScene.randomizeDiceFace = function () {
   ];
   let randomFace = Phaser.Math.RND.pick(diceFaces);
   this.dice.setTexture(randomFace);
+};
+
+gameScene.getDiceNumberFromFace = function (diceFace) {
+  let diceFaceToNumberMap = {
+    diceone: 1,
+    dicetwo: 2,
+    dicethree: 3,
+    dicefour: 4,
+    dicefive: 5,
+    dicesix: 6,
+  };
+  return diceFaceToNumberMap[diceFace];
+};
+
+gameScene.moveMarker = function (playerMarker, diceNumber, xPos, yPos) {
+  playerMarker = this.playerOneMarker; // change to get the active player marker
+  xPos = gamePath[0].x; // change to current position of the active player marker
+  yPos = gamePath[0].y; // change to current position of the active player marker
+  playerMarker.setPosition(xPos + outputNumber, yPos + outputNumber);
+
+  this.tweens.add({
+    targets: playerOneMarker,
+    x: xPos + diceNumber,
+    y: yPos + diceNumber,
+    duration: 1000,
+    onComplete: () => {
+      // Check if the player has reached the end of the game path
+      if (gamePath.indexOf(playerMarker) === gamePath.length - 1) {
+        console.log("Player has reached the end of the game path");
+      }
+    },
+  });
 };
