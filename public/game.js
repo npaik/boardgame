@@ -15,6 +15,7 @@ let game = new Phaser.Game(config);
 // initialize variables
 const WIDTH = config.width;
 const HEIGHT = config.height;
+
 let outputNumber;
 
 // each points where the markers can be placed
@@ -469,6 +470,17 @@ gameScene.create = function () {
     }
   );
 
+  // Add text box for the playerOne
+  let playerOneScore = this.add.text(
+    playerOne.x - playerOne.width / 2 - 25,
+    playerOne.y - playerOne.height / 2 + 70,
+    "Score:",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
   const playerTwo = this.add
     .sprite(worldWidth, 0, "playertwo")
     .setPosition(
@@ -482,6 +494,17 @@ gameScene.create = function () {
     playerTwo.x - playerTwo.width / 2 - 25,
     playerTwo.y - playerTwo.height / 2 + 50,
     "Player 2",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
+  // Add text box for the playerTwo
+  let playerTwoScore = this.add.text(
+    playerTwo.x - playerTwo.width / 2 - 25,
+    playerTwo.y - playerTwo.height / 2 + 70,
+    "Score:",
     {
       fontSize: "18px",
       fill: "#ffffff",
@@ -507,6 +530,17 @@ gameScene.create = function () {
     }
   );
 
+  // Add text box for the playerThree
+  let playerThreeScore = this.add.text(
+    playerThree.x - playerThree.width / 2 - 25,
+    playerThree.y - playerThree.height / 2 + 70,
+    "Score:",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
   const playerFour = this.add
     .sprite(worldWidth, worldHeight, "playerfour")
     .setPosition(
@@ -520,6 +554,17 @@ gameScene.create = function () {
     playerFour.x - playerFour.width / 2 - 25,
     playerFour.y - playerFour.height / 2 + 50,
     "Player 4",
+    {
+      fontSize: "18px",
+      fill: "#ffffff",
+    }
+  );
+
+  // Add text box for the playerFour
+  let playerFourScore = this.add.text(
+    playerFour.x - playerFour.width / 2 - 25,
+    playerFour.y - playerFour.height / 2 + 70,
+    "Score:",
     {
       fontSize: "18px",
       fill: "#ffffff",
@@ -549,16 +594,13 @@ gameScene.update = function () {};
 gameScene.onRollButtonClick = function () {
   this.rollButton.setVisible(false);
   this.dice.setVisible(true);
+
   this.rollDice((outputNumber) => {
     console.log("Output Number:", outputNumber);
+
+    // Move marker should be inside the callback
+    this.moveMarker(this.playerOneMarker, outputNumber);
   });
-  console.log(gameScene.sys.tweens.scene);
-  // gameScene.moveMarker(
-  //   gameScene.sys.tweens.scene.playerOneMarker,
-  //   outputNumber,
-  //   gamePath[0].x,
-  //   gamePath[0].y
-  // );
 };
 
 gameScene.rollDice = function (callback) {
@@ -605,22 +647,42 @@ gameScene.getDiceNumberFromFace = function (diceFace) {
   return diceFaceToNumberMap[diceFace];
 };
 
-gameScene.moveMarker = function (playerMarker, diceNumber, xPos, yPos) {
-  playerMarker = this.playerOneMarker; // change to get the active player marker
-  xPos = gamePath[0].x; // change to current position of the active player marker
-  yPos = gamePath[0].y; // change to current position of the active player marker
-  playerMarker.setPosition(xPos + outputNumber, yPos + outputNumber);
+gameScene.moveMarker = function (playerMarker, diceNumber) {
+  let currentPositionIndex = gamePath.findIndex(
+    (point) => point.x === playerMarker.x && point.y === playerMarker.y
+  );
 
-  this.tweens.add({
-    targets: playerOneMarker,
-    x: xPos + diceNumber,
-    y: yPos + diceNumber,
-    duration: 1000,
-    onComplete: () => {
-      // Check if the player has reached the end of the game path
-      if (gamePath.indexOf(playerMarker) === gamePath.length - 1) {
-        console.log("Player has reached the end of the game path");
-      }
-    },
-  });
+  if (currentPositionIndex !== -1) {
+    let nextPositionIndex =
+      (currentPositionIndex + diceNumber) % gamePath.length;
+    let nextPosition = gamePath[nextPositionIndex];
+
+    this.tweens.add({
+      targets: playerMarker,
+      x: nextPosition.x,
+      y: nextPosition.y,
+      duration: 1000,
+      onComplete: () => {
+        // Make the roll button visible and dice invisible again after the marker has finished moving
+        this.rollButton.setVisible(true);
+        this.dice.setVisible(false);
+
+        if (nextPositionIndex === 3) {
+          console.log("Player has reached the mercury");
+          window.location.href = "http://hypfgqkmxo.us16.qoddiapp.com/";
+        }
+        if (nextPositionIndex === 6) {
+          console.log("Player has reached the venus");
+          window.location.href = "https://qubeqode.github.io/phaserMemoryGame/";
+        }
+        if (nextPositionIndex === 9) {
+          console.log("Player has reached the earth");
+          window.location.href =
+            "https://jamieskidmore.github.io/meteorShowerMinigame/";
+        }
+      },
+    });
+  } else {
+    console.log("Current position not found in game path");
+  }
 };
